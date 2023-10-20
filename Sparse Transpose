@@ -1,0 +1,55 @@
+#include <stdio.h>
+int a[100][3],b[100][3];
+
+void sparce(int sr[100][3]){
+    int i,j,k=1;
+    printf("Enter total number of rows of sparse matrix :");
+    scanf("%d",&sr[0][0]);
+    printf("Enter total number of colunm of sparse matrix :");
+    scanf("%d",&sr[0][1]);
+    printf("Enter total number of non zero elements of sparse matrix :");
+    scanf("%d",&sr[0][2]);
+            for(i=1;i<sr[0][2]+1;i++){
+                printf("Enter row coloum value :");
+                for(j=0;j<3;j++){
+                       scanf("%d",&sr[i][j]);
+                }
+            }
+        for(k=0;k<sr[0][2]+1;k++){
+            for(j=0;j<3;j++){
+                printf("%d",sr[k][j]);
+            }
+            printf("\n");
+        }
+    } 
+void Transpose(int a[100][3]){
+    int m,n,i,j,k;
+    b[0][0]=a[0][1];
+    b[0][1]=a[0][0];
+    b[0][2]=a[0][2];
+    k=1;
+    m=a[0][1];
+    n=a[0][2];
+    for(i=0;i<m;i++){
+        for(j=1;j<=n;j++){
+            if(a[j][1]==i){
+                b[k][0]=a[j][1];
+                b[k][1]=a[j][0];
+                b[k][2]=a[j][2]; 
+                k++;
+            }
+        }
+    }
+    printf("\nTranspose:\n");
+    for(k=0;k<b[0][2]+1;k++){
+            for(j=0;j<3;j++){
+                printf("%d",b[k][j]);
+            }
+            printf("\n");
+        }
+ }
+int main() {
+   sparce(a);
+   Transpose(a);
+   return 0;
+}
