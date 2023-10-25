@@ -1,0 +1,76 @@
+#include<stdio.h>
+#include<stdbool.h>
+#define  Max_size 5
+int stack[Max_size];
+int top=-1;
+int element;
+bool is_empty(){
+    if(top==-1)
+        return true;
+    else
+        return false;
+}
+bool is_full(){
+    if(top>=Max_size-1)
+        return true;
+    else
+        return false;
+}
+void Push(int element){
+    if(is_full()){
+        printf("Stack is full.");
+    }
+    else{
+       
+        stack[++top]=element;
+    }
+}
+void Pop(){
+    if(!(is_empty())){
+        printf("Poped element: %d",stack[top--]);
+    }
+    else
+        printf("Stack is empty");
+}
+void Peek(){
+    if(!(is_empty())){
+        printf("Top element: %d",stack[top]);
+    } 
+    else
+        printf("Stack is empty.");
+}
+void Display(){
+    int i;
+    if(!(is_empty())){
+        printf("Stack elements:\n");
+        for(i=top;i>=0;i--){
+            printf("%d\n",stack[i]);
+        }
+    } 
+    else
+        printf("Stack is empty.");
+}
+int main(){
+    printf("1.Push\n2.Pop\n3.Peek\n4.Display\n");
+    int a;
+    while(true){
+        printf("\nEnter Option (PRESS 0 TO EXIT):");
+        scanf("%d",&a);
+        if(a!=0){
+            switch(a){
+                case 1: printf("Enter element:");
+                        scanf("%d",&element);
+                        Push(element);
+                        break;
+                case 2:Pop();
+                        break;
+                case 3:Peek();
+                        break;
+                case 4:Display();
+                        break;    
+            }
+        }
+        else
+            break;
+    }
+}
