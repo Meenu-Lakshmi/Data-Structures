@@ -1,0 +1,81 @@
+#include<stdio.h>
+#include<stdbool.h>
+#define  Max_size 5
+int stack[Max_size],minstack[Max_size];
+int top=-1,mintop=-1;
+int element;
+bool is_empty(){
+    if(top==-1)
+        return true;
+    else
+        return false;
+}
+bool is_full(){
+    if(top>=Max_size-1)
+        return true;
+    else
+        return false;
+}
+void Push(){
+    if(is_full()){
+        printf("\nStack is full.");
+    }
+    else{
+        printf("Enter element:");
+        scanf("%d",&element);
+        stack[++top]=element;
+        if(mintop==-1||element<minstack[mintop]){
+            minstack[++mintop]=element;
+        }
+    }
+}
+void Pop(){
+    if(!(is_empty())){
+        if(stack[top]==minstack[mintop]){
+        minstack[mintop--];
+        }
+        printf("\nPoped element: %d",stack[top--]);
+    }
+    else
+        printf("\nStack is empty");
+}
+void Display(){
+    int i;
+    if(!(is_empty())){
+        printf("\nStack elements:\n");
+        for(i=top;i>=0;i--){
+            printf("%d\n",stack[i]);
+        }
+    } 
+    else
+        printf("\nStack is empty.");
+}
+void getmin(){
+    if(mintop==-1){
+        printf("\nStack empty");
+    } 
+    else 
+        printf("\nMinimum element:%d",minstack[mintop]);
+}
+int main(){
+    printf("1.Push\n2.Pop\n3.Get minimum element\n4.Display\n");
+    int a;
+    while(true){
+        printf("\nEnter Option (PRESS 0 TO EXIT):");
+        scanf("%d",&a);
+        if(a!=0){
+            switch(a){
+                case 1:Push();
+                        break;
+                case 2:Pop();
+                        break;
+                case 3:getmin();
+                        break;
+                case 4:Display();
+                        break;    
+            }
+        }
+        else
+            break;
+    }
+}
