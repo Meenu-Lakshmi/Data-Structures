@@ -1,0 +1,94 @@
+#include<stdio.h>
+#include<stdbool.h>
+#define  Max_size 100
+int stack[Max_size],tempstack[Max_size];
+int top=-1,temp_top=-1,temp;
+bool stack_is_empty(){
+    if(top==-1)
+        return true;
+    else
+        return false;
+}
+bool temp_is_empty(){
+    if(temp_top==-1)
+        return true;
+    else
+        return false;
+}
+void stack_pop(){
+    stack[top--];
+}
+void temp_stack_pop(){
+    tempstack[temp_top--];
+}
+void stack_push(int element){
+    stack[++top]=element;
+}
+void tempstack_push(int element){
+    tempstack[++temp_top]=element;
+}
+void Peek(){
+    if(!(stack_is_empty())){
+        printf("Top element: %d",stack[top]);
+    } 
+    else
+        printf("Stack is empty.");
+}
+void Display(){
+    int i;
+    if(!(stack_is_empty())){
+        printf("Stack elements:\n");
+        for(i=top;i>=0;i--){
+            printf("%d\n",stack[i]);
+        }
+    } 
+    else
+        printf("Stack is empty.");
+}
+void sort(){
+    while(!(stack_is_empty())){
+        temp=stack[top];
+        stack_pop();
+        while(!(temp_is_empty()) && tempstack[temp_top]>temp){
+            stack_push(tempstack[temp_top]);
+            temp_stack_pop();   
+        }
+        tempstack_push(temp);
+    }
+    for(int i=temp_top;i>=0;i--){
+        stack[++top]=tempstack[temp_top--];
+    }
+    printf("\nSorted Stack:\n");
+    for(int i=top;i>=0;i--){
+        printf("%d\n",stack[i]);
+    }
+}
+
+int main(){
+    int x;
+    printf("1.Push\n2.Pop\n3.Peek\n4.Display\n5.Sort");
+    int a;
+    while(true){
+        printf("\nEnter Option (PRESS 0 TO EXIT):");
+        scanf("%d",&a);
+        if(a!=0){
+            switch(a){
+                case 1: printf("Enter element:");
+                        scanf("%d",&x);
+                        stack_push(x);
+                        break;
+                case 2:stack_pop();
+                        break;
+                case 3:Peek();
+                        break;
+                case 4:Display();
+                        break; 
+                case 5:sort();
+                	break;   
+            }
+        }
+        else
+            break;
+    }
+    return 0;
+}
