@@ -38,8 +38,11 @@ void sort(){
         tempstack_push(temp);
     }
     printf("\nSorted Stack:\n");
-    for(int i=0;i<=temp_top;i++){
-        printf("%d\n",tempstack[i]);
+    for(int i=temp_top;i>=0;i--){
+        stack[++top]=tempstack[i];
+    }
+    for(int i=top;i>=0;i--){
+        printf("%d\n",stack[i]);
     }
 }
 int main(){
