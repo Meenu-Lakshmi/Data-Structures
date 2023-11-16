@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+int c,count=1;
+struct node {
+    int data;
+    struct node* next;
+};
+struct node* create_node(int data) {
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    newnode->data = data;
+    newnode->next = NULL;
+    return newnode;
+}
+void insertE(struct node** head, int data) {
+    struct node* newnode = create_node(data);
+    if (newnode == NULL) {
+        printf("Memory allocation failed\n");
+    }
+    else{
+        count++;
+        if (*head == NULL) {
+            *head = newnode;
+            return;
+        }
+        struct node* current = *head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = newnode;
+    }
+}
+void printlist(struct node* head) {
+    while (head != NULL) {
+        printf("%d ", head->data);
+        head = head->next;
+    }
+    printf("\n");
+}
+void reverse(struct node** head){
+    struct node* prev = NULL;
+    struct node* current = *head;
+    struct node* next;
+
+    while (current != NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    *head = prev;
+}
+int main() {
+    struct node* head = NULL;
+    insertE(&head, 1);
+    insertE(&head, 2);
+    insertE(&head, 3);
+    printf("Linked list: ");
+    printlist(head);
+    reverse(&head);
+    printf("Linked list: ");
+    printlist(head);
+    return 0;
+}
