@@ -1,0 +1,119 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node {
+    int data;
+    struct node* next;
+};
+struct node* create_node(int data) {
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    if (newnode == NULL) {
+        printf("Memory allocation failed\n");
+        return NULL;
+    }
+    newnode->data = data;
+    newnode->next = NULL;
+    return newnode;
+}
+void insert_at_position(struct node** head, int data, int position) {
+    struct node* newnode = create_node(data);
+    if (position == 1) {
+        newnode->next = *head;
+        *head = newnode;
+        return;
+    }
+    struct node* temp = *head;
+    for (int i = 1; i < position - 1 && temp != NULL; i++) {
+        temp = temp->next;
+    }
+    if (temp == NULL) {
+        printf("Position out of bounds\n");
+        free(newnode);
+        return;
+    }
+    newnode->next = temp->next;
+    temp->next = newnode;
+}
+void printlist(struct node* head) {
+    while (head != NULL) {
+        printf("%d ", head->data);
+        head = head->next;
+    }
+    printf("\n");
+}
+int main() {
+    struct node* head = NULL;
+    insert_at_position(&head, 1, 1);
+    insert_at_position(&head, 2, 2);
+    insert_at_position(&head, 3, 3);
+    insert_at_position(&head, 7, 2);
+    printf("Linked list: ");
+    printlist(head);
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*#include <stdio.h>
+#include <stdlib.h>
+int count=0;
+struct node {
+    int data;
+    struct node* next;
+};
+struct node* create_node(int data) {
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    if (newnode == NULL) {
+        printf("Memory allocation failed\n");
+        return NULL;
+    }
+    newnode->data = data;
+    newnode->next = NULL;
+    return newnode;
+}
+void insert(struct node** head, int data, int position) {
+    count = 0; // Reset count to zero
+    struct node* newnode = create_node(data);
+    if (*head == NULL) {
+        *head = newnode;
+        return;
+    }
+    struct node* prev = NULL;
+    struct node* temp = *head;
+    while (count != position && temp->next != NULL) {
+        prev = temp;
+        temp = temp->next;
+        count++;
+    }
+    if (position == 1) {
+        newnode->next = *head;
+        *head = newnode;
+    } else {
+        prev->next = newnode;
+        newnode->next = temp;
+    }
+}
+void printlist(struct node* head) {
+    while (head != NULL) {
+        printf("%d ", head->data);
+        head = head->next;
+    }
+    printf("\n");
+}
+int main() {
+    struct node* head = NULL;
+    insert(&head, 1, 1);
+    insert(&head, 2, 2); 
+    insert(&head, 3, 3);
+    printf("Linked list: ");
+    printlist(head);
+    return 0;
+}*/
