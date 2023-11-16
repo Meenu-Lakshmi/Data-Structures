@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+int flag=0;
+struct node {
+    int data;
+    struct node* next;
+};
+
+struct node* create_node(int data) {
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    newnode->data = data;
+    newnode->next = NULL;
+    return newnode;
+}
+
+void insertE(struct node** head, int data) {
+    struct node* newnode = create_node(data);
+    if (newnode == NULL) {
+        printf("Memory allocation failed\n");
+    } else {
+        if (*head == NULL) {
+            *head = newnode;
+            return;
+        }
+        struct node* current = *head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = newnode;
+    }
+}
+
+void printlist(struct node* head) {
+    if(head==NULL){
+        printf("Empty list\n");
+        flag=1;
+    }
+    else{
+        printf("Linked list: ");
+        while (head != NULL) {
+            printf("%d ", head->data);
+            head = head->next;
+        }
+        printf("\n");
+    }
+}
+
+void delete(struct node** head, int item) {
+    struct node* temp = *head;
+    struct node* prev = NULL;
+    if (temp == NULL) {
+        printf("List is empty\n");
+    } else {
+        while (temp != NULL && temp->data != item) {
+            prev = temp;
+            temp = temp->next;
+        }
+        if (temp == NULL) {
+            printf("Item not in list\n");
+            return;
+        }
+        if (prev == NULL) {
+            *head = temp->next;
+        } else {
+            prev->next = temp->next;
+        }
+        printf("Deleted element: %d\n", temp->data);
+        free(temp);
+    }
+}
+int main() {
+    struct node* head = NULL;
+    insertE(&head, 1);
+    insertE(&head, 7);
+    insertE(&head, 3);
+    printlist(head);
+    if(flag==0){
+    delete(&head, 4);
+    printlist(head);
+    }
+    return 0;
+}
