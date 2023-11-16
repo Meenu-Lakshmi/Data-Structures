@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node* next;
+};
+
+struct node* create_node(int data) {
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    if (newnode == NULL) {
+        printf("Memory allocation failed\n");
+        return NULL;
+    }
+    newnode->data = data;
+    newnode->next = NULL;
+    return newnode;
+}
+
+void insert_at_position(struct node** head, int data) {
+    struct node* newnode = create_node(data);
+
+    if (*head == NULL || data < (*head)->data) {
+        newnode->next = *head;
+        *head = newnode;
+        return;
+    }
+
+    struct node* temp = *head;
+
+    while (temp->next != NULL && data > temp->next->data) {
+        temp = temp->next;
+    }
+
+    newnode->next = temp->next;
+    temp->next = newnode;
+}
+void printlist(struct node* head) {
+    while (head != NULL) {
+        printf("%d ", head->data);
+        head = head->next;
+    }
+    printf("\n");
+}
+int main() {
+    struct node* head = NULL;
+    insert_at_position(&head, 1);
+    insert_at_position(&head, 2);
+    insert_at_position(&head, 9);
+    insert_at_position(&head, 7);
+    printf("Linked list: ");
+    printlist(head);
+    return 0;
+}
