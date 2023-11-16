@@ -37,9 +37,14 @@ void printlist(struct node* head) {
 }
 int main() {
     struct node* head = NULL;
-    insertE(&head, 1);
-    insertE(&head, 2);
-    insertE(&head, 3);
+    int n,a;
+    printf("Enter number of terms:");
+    scanf("%d",&n);
+    for(int i=1;i<=n;i++){
+    printf("\nElement: ");
+    scanf("%d",&a);
+    insertE(&head, a);
+    }
     printlist(head);
     return 0;
 }
