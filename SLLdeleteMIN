@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <stdlib.h>
+int min,flag=0;
+struct node {
+    int data;
+    struct node* next;
+};
+
+struct node* create_node(int data) {
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    newnode->data = data;
+    newnode->next = NULL;
+    return newnode;
+}
+
+void insertE(struct node** head, int data) {
+    struct node* newnode = create_node(data);
+    if (newnode == NULL) {
+        printf("Memory allocation failed\n");
+    } else {
+        if (*head == NULL) {
+            *head = newnode;
+            return;
+        }
+        struct node* current = *head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = newnode;
+    }
+}
+
+void printlist(struct node* head) {
+    if(head==NULL){
+        printf("Empty list\n");
+        flag=1;
+    }
+    else{
+        printf("Linked list: ");
+        while (head != NULL) {
+            printf("%d ", head->data);
+            head = head->next;
+        }
+        printf("\n");
+    }
+}
+void get_min(struct node** head) {
+    struct node* temp = *head;
+    if (temp == NULL) {
+        printf("Empty list\n");
+        return;
+    }
+
+    int min = temp->data;
+
+    while (temp != NULL) {
+        if (temp->data < min) {
+            min = temp->data;
+        }
+        temp = temp->next;
+    }
+
+    delete(head, min);
+}
+
+void delete(struct node** head, int item) {
+    struct node* temp = *head;
+    struct node* prev = NULL;
+        while (temp != NULL && temp->data != item) {
+            prev = temp;
+            temp = temp->next;
+        }
+        if (prev == NULL) {
+            *head = temp->next;
+        } else {
+            prev->next = temp->next;
+        }
+        printf("Deleted element: %d\n", temp->data);
+        free(temp);  
+}
+
+int main() {
+    struct node* head = NULL;
+    insertE(&head, 1);
+    insertE(&head, 7);
+    insertE(&head, 3);
+    printlist(head);
+   // delete(&head, 4);
+   if(flag==0){
+    get_min(&head);
+    printlist(head);
+   }
+    return 0;
+}
