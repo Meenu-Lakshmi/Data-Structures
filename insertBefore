@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node {
+    int data;
+    struct node* next;
+};
+struct node* create_node(int data) {
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    if (newnode == NULL) {
+        printf("Memory allocation failed\n");
+        return NULL;
+    }
+    newnode->data = data;
+    newnode->next = NULL;
+    return newnode;
+}
+void insert(struct node** head, int data, int item) {
+    struct node* newnode = create_node(data);
+    if (*head == NULL) {
+        *head = newnode;
+        return;
+    }
+    struct node* prev = NULL;
+    struct node* temp = *head;
+    while (temp->data != item && temp->next != NULL) {
+        prev = temp;
+        temp = temp->next;
+    }
+    if (temp->next == NULL && temp->data != item) {
+        printf("Item %d not available\n,item");
+    } else if (prev == NULL) {
+        newnode->next = *head;
+        *head = newnode;
+    } else {
+        prev->next = newnode;
+        newnode->next = temp;
+    }
+}
+void printlist(struct node* head) {
+    printf("Linked list: ");
+    while (head != NULL) {
+        printf("%d ", head->data);
+        head = head->next;
+    }
+    printf("\n");
+}
+int main() {
+    struct node* head = NULL;
+    insert(&head, 1, 0);
+    insert(&head, 3, 1); 
+    insert(&head, 2, 0); 
+    printlist(head);
+    return 0;
+}
