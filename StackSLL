@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include<stdbool.h>
+#include <stdlib.h>
+struct node {
+    int data;
+    struct node* next;
+};
+struct node* create_node(int data) {
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    newnode->data = data;
+    newnode->next = NULL;
+    return newnode;
+}
+void push(struct node** head, int data) {
+    struct node* newnode = create_node(data);
+    if (newnode == NULL) {
+        printf("Memory allocation failed\n");
+    }
+    else{
+        if (*head == NULL) {
+            *head = newnode;
+            return;
+        }
+        newnode->next=*head;
+        *head= newnode;
+    }
+}
+void Display(struct node* head) {
+     if (head == NULL) {
+        printf("Stack empty\n");
+    } else {
+        printf("stack:\n");
+        while (head != NULL) {
+            printf("%d\n", head->data);
+            head = head->next;
+        }
+        printf("\n");
+    }
+}
+void pop(struct node** head) {
+    if (*head == NULL) {
+        printf("Stack empty\n");
+    } else {
+        struct node* ptr = *head;
+        *head = (*head)->next;
+        printf("Deleted element: %d\n", ptr->data);
+        free(ptr);
+    }
+}
+void peek(struct node*head){
+     if (head == NULL) {
+        printf("Stack empty\n");
+    } else {
+    printf("Top element : %d",head->data);
+    }
+}
+int main() {
+    struct node* head = NULL;
+    int a,element;
+    while(true){
+        printf("\n1.Push\n2.Pop\n3.Peek\n4.Display\n");
+        printf("\nEnter Option (PRESS 0 TO EXIT):");
+        scanf("%d",&a);
+        if(a!=0){
+            switch(a){
+                case 1: printf("Enter element:");
+                        scanf("%d",&element);
+                        push(&head,element);
+                        break;
+                case 2:pop(&head);
+                        break;
+                case 3:peek(head);
+                        break;
+                case 4:Display(head);
+                        break;    
+            }
+        }
+        else
+            break;
+    }
+}
