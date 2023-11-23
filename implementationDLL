@@ -1,0 +1,101 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+ struct node{
+ 	int data;
+ 	struct node*prev,*next;
+ };
+ void insertE(struct node** head, int data) {
+    struct node*tail=NULL;
+    struct node* newnode = create_node(data);
+    if (newnode == NULL) {
+        printf("Memory allocation failed\n");
+    }
+    else{
+        if (*head == NULL) {
+            *head = newnode;
+            tail=newnode;
+            return;
+        }
+        struct node* tail = *head;
+        while (tail->next != *head) {
+            tail = tail->next;
+        }
+        tail->next = newnode;
+        newnode->next=*head;
+        (*head)->prev=newnode;
+        tail=newnode;
+    }
+}
+ void insertS(struct node** head, int data) {
+    struct node*tail=NULL;
+    struct node* newnode = create_node(data);
+    if (newnode == NULL) {
+        printf("Memory allocation failed\n");
+    }
+    else{
+        if (*head == NULL) {
+            *head = newnode;
+            tail=newnode;
+            return;
+        }
+        struct node* tail = *head;
+        while (tail->next != *head) {
+            tail = tail->next;
+        }
+        tail->next = newnode;
+        newnode->next=*head;
+        (*head)->prev=newnode;
+        *head=newnode;
+    }
+}
+ void insertAtPos(struct node** head, int data,int position) {
+    struct node*tail=NULL;
+    struct node* newnode = create_node(data);
+    if (newnode == NULL) {
+        printf("Memory allocation failed\n");
+    }
+    else{
+        if (position == 1) {
+        newnode->next = *head;
+        *head = newnode;
+        tail=newnode;
+        return;
+    	}
+	struct node* temp = *head;
+        for (int i = 1; i < position - 1 && temp != NULL; i++) {
+		temp = temp->next;
+        }
+	if (temp == NULL) {
+		printf("Position out of bounds\n");
+		free(newnode);
+		return;
+	}
+	newnode->next = temp->next;
+	temp->next->prev=newnode;
+	temp->next = newnode;
+	newnode->prev=temp;
+    }
+}
+void delete(struct node**head,int data){
+	    struct node* temp = *head;
+	    if (temp == NULL) {
+		printf("List is empty\n");
+	    } else {
+		while (temp != NULL && temp->data != item) {
+		    prev = temp;
+		    temp = temp->next;
+		}
+		if (temp == NULL) {
+		    printf("Item not in list\n");
+		    return;
+		}
+		if (prev == NULL) {
+		    *head = temp->next;
+		} else {
+		    prev->next = temp->next;
+		}
+		printf("Deleted element: %d\n", temp->data);
+		free(temp);
+	    }
+}
