@@ -63,7 +63,7 @@
         return;
     	}
 	struct node* temp = *head;
-        for (int i = 1; i < position - 1 && temp != NULL; i++) {
+        for (int i = 1; i < position - 1 && temp->next!= NULL; i++) {
 		temp = temp->next;
         }
 	if (temp == NULL) {
@@ -82,8 +82,7 @@ void delete(struct node**head,int data){
 	    if (temp == NULL) {
 		printf("List is empty\n");
 	    } else {
-		while (temp != NULL && temp->data != item) {
-		    prev = temp;
+		while (temp->next!= NULL && temp->data != item) {
 		    temp = temp->next;
 		}
 		if (temp == NULL) {
