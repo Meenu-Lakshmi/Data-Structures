@@ -99,7 +99,7 @@ int main() {
             switch(a){
                 case 1: printf("Enter element:");
                         scanf("%d",&element);
-                        RearEnqueue(&head,element);
+                        FrontEnqueue(&head,element);
                         break;
                 case 2: printf("Enter element:");
                         scanf("%d",&element);
