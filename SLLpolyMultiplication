@@ -1,0 +1,112 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+struct node {
+    int coeff;
+    int expo;
+    struct node* next;
+};
+
+void insert(struct node** head, int coeff, int expo) {
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    if (newnode == NULL) {
+        printf("Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+    newnode->coeff = coeff;
+    newnode->expo = expo;
+    newnode->next = NULL;
+
+    if (*head == NULL) {
+        *head = newnode;
+    } else {
+        struct node* temp = *head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = newnode;
+    }
+}
+
+void multiplyPolynomials(struct node* poly1, struct node* poly2, struct node** result) {
+    struct node* temp1 = poly1;
+    while (temp1 != NULL) {
+        struct node* temp2 = poly2;
+        while (temp2 != NULL) {
+            int coeff = temp1->coeff * temp2->coeff;
+            int expo = temp1->expo + temp2->expo;
+            insert(result, coeff, expo);
+            temp2 = temp2->next;
+        }
+        temp1 = temp1->next;
+    }
+}
+
+void printPolynomial(struct node* head) {
+    while (head != NULL) {
+        printf("%dx^%d", head->coeff, head->expo);
+        if (head->next != NULL) {
+            printf(" + ");
+        }
+        head = head->next;
+    }
+    printf("\n");
+}
+
+void freeList(struct node* head) {
+    struct node* current = head;
+    struct node* next;
+
+    while (current != NULL) {
+        next = current->next;
+        free(current);
+        current = next;
+    }
+}
+
+int main() {
+    struct node* poly1 = NULL;
+    struct node* poly2 = NULL;
+    struct node* result = NULL;
+
+    int a, b;
+    char op = 'y';
+
+    printf("\nEnter first polynomial:\n");
+    while (op == 'y') {
+        printf("Enter coefficient: ");
+        scanf("%d", &a);
+        printf("Enter exponent: ");
+        scanf("%d", &b);
+        insert(&poly1, a, b);
+        printf("Do you want to continue (y/n): ");
+        scanf(" %c", &op);
+    }
+
+    op = 'y';
+
+    printf("\nEnter second polynomial:\n");
+    while (op == 'y') {
+        printf("Enter coefficient: ");
+        scanf("%d", &a);
+        printf("Enter exponent: ");
+        scanf("%d", &b);
+        insert(&poly2, a, b);
+        printf("Do you want to continue (y/n): ");
+        scanf(" %c", &op);
+    }
+
+    multiplyPolynomials(poly1, poly2, &result);
+    printf("First polynomial: ");
+    printPolynomial(poly1);
+    printf("Second polynomial: ");
+    printPolynomial(poly2);
+    printf("Product of polynomials: ");
+    printPolynomial(result);
+
+    freeList(poly1);
+    freeList(poly2);
+    freeList(result);
+    return 0;
+}
