@@ -30,30 +30,10 @@ void insertE(struct node** head, int data) {
 void OddEven(struct node*head,struct node**head2,struct node**head3){
     while(head!=NULL){
         if(head->data%2==0){
-            struct node*newnode=create_node(head->data);
-            struct node*t=*head2;
-            if(*head2==NULL){
-                *head2=newnode;
-            }
-            else{
-                while(t->next!=NULL){
-                    t=t->next;
-                }
-                t->next=newnode;
-            }
+           insertE(head2,head->data);
         }
         else{
-           struct node*newnode=create_node(head->data);
-            struct node*p=*head3;
-            if(*head3==NULL){
-                *head3=newnode;
-            }
-            else{
-                while(p->next!=NULL){
-                    p=p->next;
-                }
-                p->next=newnode;
-            } 
+           insertE(head3,head->data);
         }
         head=head->next;
     }
@@ -95,6 +75,5 @@ int main() {
     printlist(head3);
     Final(&head,head2,head3);
     printlist(head);
-    
     return 0;
 }
