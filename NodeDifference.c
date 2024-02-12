@@ -43,8 +43,12 @@ void Diff(struct node*head,int p1,int p2){
         return;
     }
     int i=1,v1,v2,diffff;
-    while((p1<=count||p2<=count)&&(i<=p1||i<=p2)){
-        if(i==p1){
+    while((head!=NULL)&&(i<=p1||i<=p2)){
+        if(p1==p2){
+            printf("Difference: 0");
+            return;
+        }
+        else if(i==p1){
             v1=head->data;
         }
         else if(i==p2){
